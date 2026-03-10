@@ -266,6 +266,7 @@
     }
     .cal-btn:hover { background: rgba(201,168,76,0.15); }
     .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
+    .cal-grid > * { min-width: 0; }
     .cal-header { text-align: center; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); padding: 10px 0; }
     .cal-day {
       background: var(--dark); min-height: 72px; padding: 8px;
@@ -450,7 +451,7 @@
   <div class="hero-cross"></div>
   <div class="hero-ornament"></div>
   <div class="hero-content">
-    <p class="hero-eyebrow">Nashville, Tennessee · Est. 1937208</p>
+    <p class="hero-eyebrow">Nashville, Tennessee · Est. 1937</p>
     <h1 class="hero-title">Ebenezer <em>Missionary</em><br>Baptist Church</h1>
     <p class="hero-sub">2624 Morena Street · Nashville, TN 37208</p>
     <div class="hero-divider"></div>
@@ -534,7 +535,17 @@
   <div class="birthday-grid" id="birthdayGrid">
     <!-- Populated by JS -->
   </div>
-  <button class="birthday-submit-btn" onclick="openBirthdayModal()">🎂 Submit a Birthday</button>
+
+  <!-- Birthday Wishes Wall -->
+  <div id="birthdayWall" style="max-width:900px;margin:48px auto 0;display:none;">
+    <div style="text-align:center;margin-bottom:20px;">
+      <p class="section-eyebrow" style="margin-bottom:8px;">🎉 Birthday Wishes from the Congregation</p>
+      <p style="font-size:0.75rem;color:rgba(247,240,227,0.45);">Wishes posted here are visible to everyone on this page</p>
+    </div>
+    <div id="wishesContainer" style="display:flex;flex-direction:column;gap:12px;"></div>
+  </div>
+
+  <button class="birthday-submit-btn" onclick="openBirthdayModal()">🎂 Submit a Birthday / Send Wishes</button>
 </section>
 
 <!-- ANNOUNCEMENTS -->
@@ -593,12 +604,11 @@
       <span class="cal-month" id="calTitle"></span>
       <button class="cal-btn" id="calNext">›</button>
     </div>
-    <div class="cal-grid">
+    <div class="cal-grid" id="calGrid">
       <div class="cal-header">Sun</div><div class="cal-header">Mon</div>
       <div class="cal-header">Tue</div><div class="cal-header">Wed</div>
       <div class="cal-header">Thu</div><div class="cal-header">Fri</div>
       <div class="cal-header">Sat</div>
-      <div id="calDays"></div>
     </div>
   </div>
 </section>
@@ -766,9 +776,9 @@
 <div class="modal-overlay" id="birthdayModal">
   <div class="modal">
     <button class="modal-close" onclick="closeBirthdayModal()">✕</button>
-    <h3>🎂 Submit a Birthday</h3>
-    <p>Share a birthday to be celebrated with our church family!</p>
-    <input type="text" id="bdayName" placeholder="Full Name" />
+    <h3>🎂 Birthday Celebration</h3>
+    <p>Add a member's birthday to the board, and leave a public wish that the whole congregation can see!</p>
+    <input type="text" id="bdayName" placeholder="Member's Full Name" />
     <input type="text" id="bdayDate" placeholder="Birthday (e.g. March 15)" />
     <select id="bdayGroup">
       <option value="" disabled selected>Select Group</option>
@@ -778,7 +788,10 @@
       <option>Choir</option>
       <option>Deacon / Deaconess</option>
     </select>
-    <button class="btn-primary" style="width:100%;margin-top:4px;" onclick="addBirthday()">Add to Celebrations</button>
+    <input type="text" id="bdayFrom" placeholder="Your name (who is sending wishes)" />
+    <textarea id="bdayWish" placeholder="Write a birthday wish or blessing (optional)…" style="width:100%;background:var(--mid);border:1px solid rgba(201,168,76,0.2);border-radius:3px;padding:12px 16px;color:var(--white);font-family:'Montserrat',sans-serif;font-size:0.78rem;margin-bottom:14px;outline:none;resize:vertical;min-height:80px;"></textarea>
+    <p style="font-size:0.68rem;color:rgba(247,240,227,0.35);margin-bottom:14px;">✅ Wishes will appear on the <strong style="color:var(--gold)">Birthday Wishes Wall</strong> below the birthday cards for everyone to read.</p>
+    <button class="btn-primary" style="width:100%;" onclick="addBirthday()">Post to Birthday Board</button>
   </div>
 </div>
 
@@ -810,14 +823,42 @@
   function closeBirthdayModal() { document.getElementById('birthdayModal').classList.remove('open'); }
 
   function addBirthday() {
-    const name = document.getElementById('bdayName').value.trim();
-    const date = document.getElementById('bdayDate').value.trim();
+    const name  = document.getElementById('bdayName').value.trim();
+    const date  = document.getElementById('bdayDate').value.trim();
+    const from  = document.getElementById('bdayFrom').value.trim();
+    const wish  = document.getElementById('bdayWish').value.trim();
     if (!name || !date) { alert('Please enter a name and birthday date.'); return; }
+
+    // Add card
     birthdays.push({ name, date, icon: '🎂' });
     renderBirthdays();
+
+    // Add wish to wall if provided
+    if (wish) {
+      const wall = document.getElementById('birthdayWall');
+      const container = document.getElementById('wishesContainer');
+      wall.style.display = 'block';
+      const el = document.createElement('div');
+      el.style.cssText = 'background:var(--dark);border:1px solid rgba(201,168,76,0.2);border-radius:4px;padding:20px 24px;display:flex;gap:16px;align-items:flex-start;';
+      el.innerHTML = `
+        <div style="font-size:1.6rem;flex-shrink:0;">🎉</div>
+        <div>
+          <p style="font-family:Cormorant Garamond,serif;font-size:1.05rem;color:var(--white);margin-bottom:4px;">Happy Birthday, <strong>${name}</strong>!</p>
+          <p style="font-size:0.78rem;color:rgba(247,240,227,0.6);line-height:1.7;">"${wish}"</p>
+          ${from ? `<p style="font-size:0.65rem;color:var(--gold);margin-top:8px;letter-spacing:0.08em;">— ${from}</p>` : ''}
+        </div>`;
+      container.prepend(el);
+
+      // Scroll to wall
+      setTimeout(() => wall.scrollIntoView({ behavior:'smooth', block:'center' }), 300);
+    }
+
     closeBirthdayModal();
-    document.getElementById('bdayName').value = '';
-    document.getElementById('bdayDate').value = '';
+    document.getElementById('bdayName').value  = '';
+    document.getElementById('bdayDate').value  = '';
+    document.getElementById('bdayFrom').value  = '';
+    document.getElementById('bdayWish').value  = '';
+    document.getElementById('bdayGroup').selectedIndex = 0;
   }
 
   document.getElementById('birthdayModal').addEventListener('click', function(e) {
@@ -831,34 +872,51 @@
   const eventDays = { '2026-2': [9,16,19,22,23,29,30], '2026-3': [5,6,12,13,19,20,26,27] };
 
   function renderCal() {
-    const year = calDate.getFullYear(), month = calDate.getMonth();
+    const year  = calDate.getFullYear();
+    const month = calDate.getMonth();
     const today = new Date();
     document.getElementById('calTitle').textContent =
       calDate.toLocaleString('default', { month: 'long', year: 'numeric' });
 
-    const first = new Date(year, month, 1).getDay();
-    const days  = new Date(year, month + 1, 0).getDate();
-    const key   = `${year}-${month}`;
-    const evts  = eventDays[key] || [];
+    const grid     = document.getElementById('calGrid');
+    const key      = `${year}-${month}`;
+    const evts     = eventDays[key] || [];
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const prevMonthDays = new Date(year, month, 0).getDate();
 
-    let html = '';
+    // Remove old day cells (keep the 7 header divs)
+    const headers = Array.from(grid.querySelectorAll('.cal-header'));
+    grid.innerHTML = '';
+    headers.forEach(h => grid.appendChild(h));
+
     // Previous month padding
-    const prevDays = new Date(year, month, 0).getDate();
-    for (let i = first - 1; i >= 0; i--) {
-      html += `<div class="cal-day other-month"><div class="dn">${prevDays - i}</div></div>`;
+    for (let i = firstDay - 1; i >= 0; i--) {
+      const el = document.createElement('div');
+      el.className = 'cal-day other-month';
+      el.innerHTML = `<div class="dn">${prevMonthDays - i}</div>`;
+      grid.appendChild(el);
     }
-    for (let d = 1; d <= days; d++) {
+
+    // Current month days
+    for (let d = 1; d <= daysInMonth; d++) {
       const isToday = d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
       const hasEvt  = evts.includes(d);
-      html += `<div class="cal-day${isToday?' today':''}${hasEvt?' has-event':''}"><div class="dn">${d}</div></div>`;
+      const el = document.createElement('div');
+      el.className = `cal-day${isToday ? ' today' : ''}${hasEvt ? ' has-event' : ''}`;
+      el.innerHTML = `<div class="dn">${d}</div>`;
+      grid.appendChild(el);
     }
+
     // Next month padding
-    const used = first + days;
-    const cells = Math.ceil(used / 7) * 7;
-    for (let d = 1; d <= cells - used; d++) {
-      html += `<div class="cal-day other-month"><div class="dn">${d}</div></div>`;
+    const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+    const trailing   = totalCells - firstDay - daysInMonth;
+    for (let d = 1; d <= trailing; d++) {
+      const el = document.createElement('div');
+      el.className = 'cal-day other-month';
+      el.innerHTML = `<div class="dn">${d}</div>`;
+      grid.appendChild(el);
     }
-    document.getElementById('calDays').innerHTML = html;
   }
 
   document.getElementById('calPrev').onclick = () => { calDate.setMonth(calDate.getMonth()-1); renderCal(); };
