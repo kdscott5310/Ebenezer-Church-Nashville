@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ebenezer Missionary Baptist Church – Nashville, TN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-dark: #8B6914;
+      --deep: #0D0A04;
+      --dark: #1A1408;
+      --mid: #2A2010;
+      --warm: #3D2F15;
+      --cream: #F7F0E3;
+      --white: #FDFAF4;
+      --text: #2C2210;
+      --muted: #7A6840;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--deep);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(13, 10, 4, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem; font-weight: 600; letter-spacing: 0.06em;
+      color: var(--gold);
+    }
+    .nav-logo span { display: block; font-size: 0.7rem; font-weight: 300; letter-spacing: 0.18em; color: var(--gold-light); text-transform: uppercase; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--cream); text-decoration: none;
+      transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-donate {
+      background: var(--gold); color: var(--deep);
+      padding: 9px 22px; border-radius: 2px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; text-decoration: none;
+      transition: background .25s;
+    }
+    .nav-donate:hover { background: var(--gold-light); }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.12) 0%, transparent 60%),
+        linear-gradient(160deg, #1A1408 0%, #0D0A04 60%, #1A0D02 100%);
+      overflow: hidden;
+    }
+    .hero-cross {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-60%);
+      width: 340px; height: 340px; opacity: 0.04;
+    }
+    .hero-cross::before, .hero-cross::after {
+      content: ''; position: absolute; background: var(--gold); border-radius: 4px;
+    }
+    .hero-cross::before { width: 18px; height: 100%; top: 0; left: 50%; transform: translateX(-50%); }
+    .hero-cross::after  { width: 100%; height: 18px; top: 35%; left: 0; }
+
+    .hero-ornament {
+      position: absolute; width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        45deg, transparent, transparent 60px,
+        rgba(201,168,76,0.015) 60px, rgba(201,168,76,0.015) 61px
+      );
+      pointer-events: none;
+    }
+    .hero-content { text-align: center; position: relative; z-index: 2; padding: 0 24px; }
+    .hero-eyebrow {
+      font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+      animation: fadeUp .8s ease both;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 7vw, 6rem);
+      font-weight: 300; line-height: 1.05;
+      color: var(--white);
+      animation: fadeUp .8s .15s ease both;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      margin-top: 16px; font-size: 0.78rem; font-weight: 300;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(247,240,227,0.55);
+      animation: fadeUp .8s .28s ease both;
+    }
+    .hero-divider {
+      width: 60px; height: 1px; background: var(--gold);
+      margin: 28px auto; opacity: 0.6;
+      animation: fadeUp .8s .38s ease both;
+    }
+    .hero-verse {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; font-style: italic; font-weight: 300;
+      color: rgba(247,240,227,0.7); max-width: 480px; margin: 0 auto;
+      animation: fadeUp .8s .45s ease both;
+    }
+    .hero-ctas {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      margin-top: 36px;
+      animation: fadeUp .8s .55s ease both;
+    }
+    .btn-primary {
+      background: var(--gold); color: var(--deep);
+      padding: 14px 34px; border-radius: 2px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; text-decoration: none; cursor: pointer;
+      border: none; transition: background .25s;
+    }
+    .btn-primary:hover { background: var(--gold-light); }
+    .btn-outline {
+      border: 1px solid rgba(201,168,76,0.5); color: var(--gold);
+      background: transparent;
+      padding: 14px 34px; border-radius: 2px;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; text-decoration: none; cursor: pointer;
+      transition: border-color .25s, color .25s;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold-light); }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform: translateY(24px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS SHARED ── */
+    section { scroll-margin-top: 80px; }
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-eyebrow {
+      font-size: 0.66rem; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300; color: var(--white); line-height: 1.15;
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .gold-rule { width: 50px; height: 1px; background: var(--gold); margin: 18px auto 0; opacity: .5; }
+
+    /* ── WELCOME BAND ── */
+    #welcome {
+      padding: 80px 48px;
+      background: linear-gradient(135deg, var(--mid) 0%, var(--warm) 100%);
+      text-align: center;
+      border-top: 1px solid rgba(201,168,76,0.2);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .welcome-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 32px; max-width: 900px; margin: 40px auto 0; }
+    .welcome-stat { text-align: center; }
+    .welcome-stat .num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem; font-weight: 600; color: var(--gold); line-height: 1;
+    }
+    .welcome-stat .lbl { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(247,240,227,0.55); margin-top: 6px; }
+
+    /* ── EVENTS ── */
+    #events { padding: 100px 48px; background: var(--deep); }
+    .events-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 24px; max-width: 1100px; margin: 0 auto; }
+    .event-card {
+      background: var(--dark); border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 4px; padding: 28px; position: relative;
+      transition: border-color .3s, transform .3s;
+    }
+    .event-card:hover { border-color: rgba(201,168,76,0.5); transform: translateY(-4px); }
+    .event-date-badge {
+      position: absolute; top: 28px; right: 28px;
+      width: 52px; text-align: center;
+      background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 3px; padding: 8px 4px;
+    }
+    .event-date-badge .month { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
+    .event-date-badge .day { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; color: var(--white); line-height: 1; }
+    .event-type { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .event-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: var(--white); margin-bottom: 8px; padding-right: 60px; }
+    .event-detail { font-size: 0.75rem; color: rgba(247,240,227,0.5); line-height: 1.7; }
+    .event-detail strong { color: rgba(247,240,227,0.75); font-weight: 500; }
+
+    /* FACEBOOK EVENTS NOTE */
+    .fb-events-note {
+      text-align: center; margin-top: 36px;
+      font-size: 0.75rem; color: rgba(247,240,227,0.45);
+    }
+    .fb-events-note a { color: var(--gold); text-decoration: none; }
+    .fb-events-note a:hover { text-decoration: underline; }
+
+    /* ── BIRTHDAYS ── */
+    #birthdays { padding: 100px 48px; background: linear-gradient(180deg, var(--dark) 0%, var(--mid) 100%); }
+    .birthday-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); gap: 16px; max-width: 1000px; margin: 0 auto; }
+    .birthday-card {
+      background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 4px; padding: 22px 16px; text-align: center;
+      transition: border-color .3s;
+    }
+    .birthday-card:hover { border-color: rgba(201,168,76,0.4); }
+    .bday-icon { font-size: 1.6rem; margin-bottom: 10px; }
+    .bday-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+    .bday-date { font-size: 0.65rem; letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase; }
+    .birthday-submit-btn {
+      display: block; width: fit-content; margin: 36px auto 0;
+      background: transparent; border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold); padding: 12px 28px; border-radius: 2px;
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      cursor: pointer; font-family: 'Montserrat', sans-serif;
+      transition: background .25s;
+    }
+    .birthday-submit-btn:hover { background: rgba(201,168,76,0.1); }
+
+    /* ── ANNOUNCEMENTS ── */
+    #announcements { padding: 100px 48px; background: var(--deep); }
+    .announce-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+    .announce-item {
+      display: flex; gap: 24px; align-items: flex-start;
+      background: var(--dark); border-left: 3px solid var(--gold);
+      padding: 24px 28px; border-radius: 0 4px 4px 0;
+      transition: border-left-width .25s;
+    }
+    .announce-item:hover { border-left-width: 5px; }
+    .announce-tag {
+      flex-shrink: 0; font-size: 0.6rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--deep); background: var(--gold);
+      padding: 4px 10px; border-radius: 2px; height: fit-content; margin-top: 3px;
+    }
+    .announce-tag.info { background: #4A90A4; }
+    .announce-tag.prayer { background: #7B6B9D; }
+    .announce-body h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+    .announce-body p { font-size: 0.78rem; color: rgba(247,240,227,0.6); line-height: 1.7; }
+    .announce-date { font-size: 0.62rem; color: var(--muted); margin-top: 8px; letter-spacing: 0.08em; }
+
+    /* ── CALENDAR ── */
+    #calendar { padding: 100px 48px; background: linear-gradient(180deg, var(--mid) 0%, var(--dark) 100%); }
+    .calendar-wrap { max-width: 820px; margin: 0 auto; }
+    .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .cal-month { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; color: var(--white); }
+    .cal-btn {
+      background: transparent; border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold); width: 36px; height: 36px; border-radius: 50%;
+      cursor: pointer; font-size: 1rem; transition: background .2s;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .cal-btn:hover { background: rgba(201,168,76,0.15); }
+    .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
+    .cal-header { text-align: center; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); padding: 10px 0; }
+    .cal-day {
+      background: var(--dark); min-height: 72px; padding: 8px;
+      border: 1px solid rgba(201,168,76,0.06); border-radius: 3px;
+      position: relative; cursor: default; transition: border-color .2s;
+    }
+    .cal-day:hover { border-color: rgba(201,168,76,0.3); }
+    .cal-day .dn { font-size: 0.78rem; color: rgba(247,240,227,0.35); font-weight: 500; }
+    .cal-day.today { border-color: rgba(201,168,76,0.6); }
+    .cal-day.today .dn { color: var(--gold); font-weight: 700; }
+    .cal-day.has-event::after {
+      content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+      width: 6px; height: 6px; background: var(--gold); border-radius: 50%;
+    }
+    .cal-day.other-month .dn { opacity: .25; }
+
+    /* ── LIVE STREAM ── */
+    #livestream { padding: 100px 48px; background: var(--deep); }
+    .stream-wrap { max-width: 900px; margin: 0 auto; }
+    .stream-status {
+      display: flex; align-items: center; gap: 10px;
+      justify-content: center; margin-bottom: 28px;
+    }
+    .stream-dot {
+      width: 10px; height: 10px; border-radius: 50%; background: #E53E3E;
+      animation: pulse 1.5s infinite;
+    }
+    .stream-dot.live { background: #38A169; }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.4;} }
+    .stream-label { font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(247,240,227,0.6); }
+    .stream-frame {
+      width: 100%; aspect-ratio: 16/9;
+      background: var(--dark); border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 4px; overflow: hidden; position: relative;
+    }
+    .stream-frame iframe { width: 100%; height: 100%; border: none; }
+    .stream-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 16px; text-align: center;
+    }
+    .stream-placeholder .icon { font-size: 3rem; opacity: 0.4; }
+    .stream-placeholder p { font-size: 0.78rem; color: rgba(247,240,227,0.4); max-width: 380px; line-height: 1.7; }
+    .stream-placeholder a { color: var(--gold); text-decoration: none; font-weight: 600; }
+    .stream-placeholder a:hover { text-decoration: underline; }
+    .stream-times { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+    .stream-time {
+      background: var(--dark); border: 1px solid rgba(201,168,76,0.15);
+      padding: 14px 22px; border-radius: 3px; text-align: center;
+    }
+    .stream-time .day { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+    .stream-time .hour { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--white); }
+
+    /* ── DONATIONS ── */
+    #donate { padding: 100px 48px; background: linear-gradient(135deg, var(--warm) 0%, var(--mid) 100%); }
+    .donate-grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 24px; }
+    .donate-card {
+      background: rgba(13,10,4,0.6); border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 4px; padding: 36px 28px; text-align: center;
+      transition: border-color .3s, transform .3s;
+    }
+    .donate-card:hover { border-color: rgba(201,168,76,0.5); transform: translateY(-4px); }
+    .donate-icon { font-size: 2.4rem; margin-bottom: 16px; }
+    .donate-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: var(--white); margin-bottom: 10px; }
+    .donate-desc { font-size: 0.75rem; color: rgba(247,240,227,0.5); line-height: 1.75; margin-bottom: 24px; }
+    .donate-link {
+      display: inline-block; background: var(--gold); color: var(--deep);
+      padding: 11px 26px; border-radius: 2px;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; text-decoration: none;
+      transition: background .25s;
+    }
+    .donate-link:hover { background: var(--gold-light); }
+
+    /* ── FACEBOOK FEED ── */
+    #social { padding: 100px 48px; background: var(--deep); }
+    .fb-feed-wrap { max-width: 820px; margin: 0 auto; text-align: center; }
+    .fb-embed-container {
+      background: var(--dark); border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 4px; padding: 32px;
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
+    }
+    .fb-embed-container iframe { border-radius: 3px; max-width: 100%; }
+    .fb-follow-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #1877F2; color: #fff;
+      padding: 13px 28px; border-radius: 3px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em;
+      text-decoration: none; transition: opacity .25s;
+    }
+    .fb-follow-btn:hover { opacity: .85; }
+
+    /* ── CONTACT ── */
+    #contact { padding: 100px 48px; background: var(--dark); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 960px; margin: 0 auto; }
+    .contact-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--white); margin-bottom: 24px; }
+    .contact-detail { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; }
+    .contact-detail .ci { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+    .contact-detail .ct { font-size: 0.78rem; line-height: 1.7; color: rgba(247,240,227,0.6); }
+    .contact-detail .ct strong { display: block; color: var(--white); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px; }
+    .map-frame {
+      width: 100%; height: 320px; border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 4px; overflow: hidden;
+    }
+    .map-frame iframe { width: 100%; height: 100%; border: none; filter: grayscale(60%) sepia(20%); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--deep); border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 48px; text-align: center;
+    }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--gold); margin-bottom: 8px; }
+    .footer-tagline { font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(247,240,227,0.3); margin-bottom: 24px; }
+    .footer-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+    .footer-links a { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(247,240,227,0.4); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy { font-size: 0.65rem; color: rgba(247,240,227,0.2); }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 2000;
+      background: rgba(0,0,0,0.8); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--dark); border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 6px; padding: 40px; width: 90%; max-width: 480px; position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 16px; right: 20px;
+      background: none; border: none; color: var(--muted);
+      font-size: 1.4rem; cursor: pointer; transition: color .2s;
+    }
+    .modal-close:hover { color: var(--gold); }
+    .modal h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--white); margin-bottom: 8px; }
+    .modal p { font-size: 0.75rem; color: rgba(247,240,227,0.5); margin-bottom: 24px; }
+    .modal input, .modal select {
+      width: 100%; background: var(--mid); border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 3px; padding: 12px 16px; color: var(--white);
+      font-family: 'Montserrat', sans-serif; font-size: 0.78rem;
+      margin-bottom: 14px; outline: none;
+      transition: border-color .2s;
+    }
+    .modal input:focus, .modal select:focus { border-color: rgba(201,168,76,0.6); }
+    .modal input::placeholder { color: rgba(247,240,227,0.3); }
+    .modal select option { background: var(--dark); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      #home, #events, #birthdays, #announcements, #calendar, #livestream, #donate, #social, #contact { padding: 70px 20px; }
+      #welcome { padding: 60px 20px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      footer { padding: 36px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    Ebenezer
+    <span>Missionary Baptist Church</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#events">Events</a></li>
+    <li><a href="#birthdays">Birthdays</a></li>
+    <li><a href="#announcements">Announcements</a></li>
+    <li><a href="#calendar">Calendar</a></li>
+    <li><a href="#livestream">Live</a></li>
+    <li><a href="#social">Connect</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#donate" class="nav-donate">Give</a>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-cross"></div>
+  <div class="hero-ornament"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Nashville, Tennessee · Est. 1937208</p>
+    <h1 class="hero-title">Ebenezer <em>Missionary</em><br>Baptist Church</h1>
+    <p class="hero-sub">2624 Morena Street · Nashville, TN 37208</p>
+    <div class="hero-divider"></div>
+    <p class="hero-verse">"Thus far has the Lord helped us." — 1 Samuel 7:12</p>
+    <div class="hero-ctas">
+      <a href="#livestream" class="btn-primary">▶ Watch Live</a>
+      <a href="#events" class="btn-outline">Upcoming Events</a>
+    </div>
+  </div>
+</section>
+
+<!-- WELCOME BAND -->
+<section id="welcome">
+  <div class="section-header">
+    <p class="section-eyebrow">Welcome Home</p>
+    <h2 class="section-title">A Community of <em>Faith & Fellowship</em></h2>
+    <div class="gold-rule"></div>
+  </div>
+  <div class="welcome-grid">
+    <div class="welcome-stat"><div class="num">Sun</div><div class="lbl">Sunday Service · 10:00 AM</div></div>
+    <div class="welcome-stat"><div class="num">Wed</div><div class="lbl">Bible Study · 7:00 PM</div></div>
+    <div class="welcome-stat"><div class="num">(615)</div><div class="lbl">320-7937</div></div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section id="events">
+  <div class="section-header">
+    <p class="section-eyebrow">Community</p>
+    <h2 class="section-title">Upcoming <em>Events</em></h2>
+    <div class="gold-rule"></div>
+  </div>
+  <div class="events-grid">
+    <div class="event-card">
+      <div class="event-date-badge"><div class="month">Mar</div><div class="day">16</div></div>
+      <p class="event-type">Worship</p>
+      <h3 class="event-name">Sunday Morning Service</h3>
+      <p class="event-detail"><strong>Time:</strong> 10:00 AM<br><strong>Location:</strong> Main Sanctuary<br>Join us for worship, praise, and the Word.</p>
+    </div>
+    <div class="event-card">
+      <div class="event-date-badge"><div class="month">Mar</div><div class="day">19</div></div>
+      <p class="event-type">Study</p>
+      <h3 class="event-name">Midweek Bible Study</h3>
+      <p class="event-detail"><strong>Time:</strong> 7:00 PM<br><strong>Location:</strong> Fellowship Hall<br>Deepening our walk through the Word together.</p>
+    </div>
+    <div class="event-card">
+      <div class="event-date-badge"><div class="month">Mar</div><div class="day">22</div></div>
+      <p class="event-type">Community</p>
+      <h3 class="event-name">Youth & Family Day</h3>
+      <p class="event-detail"><strong>Time:</strong> 12:00 PM<br><strong>Location:</strong> Church Grounds<br>Food, fellowship, and fun for the whole family.</p>
+    </div>
+    <div class="event-card">
+      <div class="event-date-badge"><div class="month">Mar</div><div class="day">23</div></div>
+      <p class="event-type">Sunday Service</p>
+      <h3 class="event-name">Sunday Morning Worship</h3>
+      <p class="event-detail"><strong>Time:</strong> 10:00 AM<br><strong>Location:</strong> Main Sanctuary<br>All are welcome at the table of grace.</p>
+    </div>
+    <div class="event-card">
+      <div class="event-date-badge"><div class="month">Apr</div><div class="day">6</div></div>
+      <p class="event-type">Special</p>
+      <h3 class="event-name">Palm Sunday Celebration</h3>
+      <p class="event-detail"><strong>Time:</strong> 10:00 AM<br><strong>Location:</strong> Main Sanctuary<br>Welcoming the King — special music & ceremony.</p>
+    </div>
+    <div class="event-card" style="border-style: dashed; cursor: pointer; display:flex; align-items:center; justify-content:center; min-height:180px;" onclick="window.open('https://www.facebook.com/ECCNashville/events','_blank')">
+      <div style="text-align:center;">
+        <div style="font-size:2rem; margin-bottom:12px; opacity:.4;">📅</div>
+        <p style="font-size:0.75rem; color:rgba(247,240,227,0.4);">View all events on<br><span style="color:var(--gold)">Facebook →</span></p>
+      </div>
+    </div>
+  </div>
+  <p class="fb-events-note">Events are updated regularly on our <a href="https://www.facebook.com/ECCNashville" target="_blank">Facebook page</a>. Check there for the latest additions.</p>
+</section>
+
+<!-- BIRTHDAYS -->
+<section id="birthdays">
+  <div class="section-header">
+    <p class="section-eyebrow">Celebrating Our Family</p>
+    <h2 class="section-title">Birthday <em>Announcements</em></h2>
+    <div class="gold-rule"></div>
+  </div>
+  <div class="birthday-grid" id="birthdayGrid">
+    <!-- Populated by JS -->
+  </div>
+  <button class="birthday-submit-btn" onclick="openBirthdayModal()">🎂 Submit a Birthday</button>
+</section>
+
+<!-- ANNOUNCEMENTS -->
+<section id="announcements">
+  <div class="section-header">
+    <p class="section-eyebrow">Church News</p>
+    <h2 class="section-title">Latest <em>Announcements</em></h2>
+    <div class="gold-rule"></div>
+  </div>
+  <div class="announce-list">
+    <div class="announce-item">
+      <span class="announce-tag">Notice</span>
+      <div class="announce-body">
+        <h4>New Member Orientation</h4>
+        <p>Are you new to Ebenezer? Join us the first Sunday of each month following service for our New Member Orientation class in Room 102.</p>
+        <p class="announce-date">Posted March 1, 2026</p>
+      </div>
+    </div>
+    <div class="announce-item">
+      <span class="announce-tag info">Info</span>
+      <div class="announce-body">
+        <h4>Choir Rehearsal Schedule Update</h4>
+        <p>Beginning March 15th, the Mass Choir will rehearse every Saturday at 11:00 AM. New voices are always welcome — see Minister of Music for details.</p>
+        <p class="announce-date">Posted March 5, 2026</p>
+      </div>
+    </div>
+    <div class="announce-item">
+      <span class="announce-tag prayer">Prayer</span>
+      <div class="announce-body">
+        <h4>Community Prayer Line</h4>
+        <p>Our prayer line is available Monday–Friday 6:00–7:00 AM. Call (615) 320-7937 and press 2. Please keep our sick and shut-in members in your prayers.</p>
+        <p class="announce-date">Posted March 7, 2026</p>
+      </div>
+    </div>
+    <div class="announce-item">
+      <span class="announce-tag">Notice</span>
+      <div class="announce-body">
+        <h4>Vacation Bible School – Registration Open</h4>
+        <p>VBS 2026 registration is now open for ages 5–12. Join us July 14–18 for a week of scripture, crafts, and fun. Contact the church office to register your child.</p>
+        <p class="announce-date">Posted March 8, 2026</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<section id="calendar">
+  <div class="section-header">
+    <p class="section-eyebrow">Plan Ahead</p>
+    <h2 class="section-title">Church <em>Calendar</em></h2>
+    <div class="gold-rule"></div>
+  </div>
+  <div class="calendar-wrap">
+    <div class="cal-nav">
+      <button class="cal-btn" id="calPrev">‹</button>
+      <span class="cal-month" id="calTitle"></span>
+      <button class="cal-btn" id="calNext">›</button>
+    </div>
+    <div class="cal-grid">
+      <div class="cal-header">Sun</div><div class="cal-header">Mon</div>
+      <div class="cal-header">Tue</div><div class="cal-header">Wed</div>
+      <div class="cal-header">Thu</div><div class="cal-header">Fri</div>
+      <div class="cal-header">Sat</div>
+      <div id="calDays"></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE STREAM -->
+<section id="livestream">
+  <div class="section-header">
+    <p class="section-eyebrow">Worship From Anywhere</p>
+    <h2 class="section-title">Watch Us <em>Live</em></h2>
+    <div class="gold-rule"></div>
+  </div>
+  <div class="stream-wrap">
+    <div class="stream-status">
+      <div class="stream-dot" id="liveDot"></div>
+      <span class="stream-label" id="liveLabel">Service not currently live</span>
+    </div>
+    <div class="stream-frame">
+      <!-- Facebook Live Embed — replace PAGE_ID with actual numeric ID once confirmed -->
+      <div class="stream-placeholder">
+        <div class="icon">📡</div>
+        <p>Our live service streams directly on <a href="https://www.facebook.com/ECCNashville/live" target="_blank">Facebook Live</a>.<br>
+        Click below to watch live or view past services, or embed the stream by replacing the Facebook Page ID once obtained from your page settings.</p>
+        <a href="https://www.facebook.com/ECCNashville/live" target="_blank" class="btn-primary" style="margin-top:8px;">Watch on Facebook Live ›</a>
+      </div>
+      <!--
+        TO ENABLE EMBEDDED LIVE STREAM:
+        1. Go to your Facebook Page → About → Page ID (copy the number)
+        2. Replace PAGE_ID below with that number
+        3. Remove the placeholder div above and uncomment this iframe:
+
+        <iframe
+          src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FECCNashville%2Flive&show_text=false"
+          width="100%" height="100%" style="border:none;overflow:hidden"
+          scrolling="no" frameborder="0" allowfullscreen="true"
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+        </iframe>
+      -->
+    </div>
+    <div class="stream-times">
+      <div class="stream-time"><div class="day">Sunday</div><div class="hour">10:00 AM</div></div>
+      <div class="stream-time"><div class="day">Wednesday</div><div class="hour">7:00 PM</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DONATE -->
+<section id="donate">
+  <div class="section-header">
+    <p class="section-eyebrow">Support the Ministry</p>
+    <h2 class="section-title">Give <em>Generously</em></h2>
+    <div class="gold-rule"></div>
+    <p style="font-size:0.78rem; color:rgba(247,240,227,0.5); margin-top:16px; max-width:520px; margin-left:auto; margin-right:auto; line-height:1.8;">
+      "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver." — 2 Corinthians 9:7
+    </p>
+  </div>
+  <div class="donate-grid">
+    <div class="donate-card">
+      <div class="donate-icon">🙏</div>
+      <h3 class="donate-name">General Tithe & Offering</h3>
+      <p class="donate-desc">Support the daily ministry and operations of Ebenezer Missionary Baptist Church.</p>
+      <a href="https://www.paypal.com/donate" target="_blank" class="donate-link">Give via PayPal</a>
+    </div>
+    <div class="donate-card">
+      <div class="donate-icon">🏗️</div>
+      <h3 class="donate-name">Building Fund</h3>
+      <p class="donate-desc">Help us maintain and expand our facilities to better serve our congregation and community.</p>
+      <a href="https://www.cashapp.com/$EbenezerNashville" target="_blank" class="donate-link">Give via Cash App</a>
+    </div>
+    <div class="donate-card">
+      <div class="donate-icon">🌱</div>
+      <h3 class="donate-name">Community Outreach</h3>
+      <p class="donate-desc">Fund programs that feed families, clothe children, and strengthen our Nashville neighborhood.</p>
+      <a href="https://www.zelle.com" target="_blank" class="donate-link">Give via Zelle</a>
+    </div>
+  </div>
+  <p style="text-align:center; margin-top:28px; font-size:0.72rem; color:rgba(247,240,227,0.3);">
+    To update donation links with your actual accounts, contact your web administrator.<br>
+    Checks payable to <em>Ebenezer Missionary Baptist Church</em> · 2624 Morena St, Nashville, TN 37208
+  </p>
+</section>
+
+<!-- FACEBOOK / SOCIAL -->
+<section id="social">
+  <div class="section-header">
+    <p class="section-eyebrow">Stay Connected</p>
+    <h2 class="section-title">Follow Us on <em>Facebook</em></h2>
+    <div class="gold-rule"></div>
+  </div>
+  <div class="fb-feed-wrap">
+    <div class="fb-embed-container">
+      <iframe
+        src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FECCNashville&tabs=timeline&width=500&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+        width="500" height="600"
+        style="border:none;overflow:hidden;max-width:100%"
+        scrolling="no" frameborder="0" allowfullscreen="true"
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+      </iframe>
+      <a href="https://www.facebook.com/ECCNashville" target="_blank" class="fb-follow-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Follow Ebenezer on Facebook
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <p class="section-eyebrow">We'd Love to Hear From You</p>
+    <h2 class="section-title">Find <em>Us</em></h2>
+    <div class="gold-rule"></div>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>Come Worship With Us</h3>
+      <div class="contact-detail">
+        <span class="ci">📍</span>
+        <div class="ct"><strong>Address</strong>2624 Morena Street<br>Nashville, TN 37208</div>
+      </div>
+      <div class="contact-detail">
+        <span class="ci">📞</span>
+        <div class="ct"><strong>Phone</strong><a href="tel:6153207937" style="color:var(--gold); text-decoration:none;">(615) 320-7937</a></div>
+      </div>
+      <div class="contact-detail">
+        <span class="ci">🕐</span>
+        <div class="ct"><strong>Office Hours</strong>Mon – Fri: 9:00 AM – 4:00 PM</div>
+      </div>
+      <div class="contact-detail">
+        <span class="ci">⛪</span>
+        <div class="ct"><strong>Sunday Worship</strong>10:00 AM · All Are Welcome</div>
+      </div>
+      <div class="contact-detail">
+        <span class="ci">📖</span>
+        <div class="ct"><strong>Wednesday Bible Study</strong>7:00 PM · Fellowship Hall</div>
+      </div>
+    </div>
+    <div class="map-frame">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3223.63!2d-86.8136!3d36.1820!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886474cc24de777b%3A0x9d1a1271a6d12c!2s2624+Morena+St%2C+Nashville%2C+TN+37208!5e0!3m2!1sen!2sus!4v1"
+        allowfullscreen="" loading="lazy">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Ebenezer Missionary Baptist Church</div>
+  <div class="footer-tagline">Nashville, Tennessee · "Thus Far Has the Lord Helped Us"</div>
+  <div class="footer-links">
+    <a href="#home">Home</a>
+    <a href="#events">Events</a>
+    <a href="#birthdays">Birthdays</a>
+    <a href="#announcements">Announcements</a>
+    <a href="#calendar">Calendar</a>
+    <a href="#livestream">Live Stream</a>
+    <a href="#donate">Donate</a>
+    <a href="#contact">Contact</a>
+    <a href="https://www.facebook.com/ECCNashville" target="_blank">Facebook</a>
+  </div>
+  <div class="footer-copy">© 2026 Ebenezer Missionary Baptist Church · 2624 Morena St, Nashville, TN 37208 · (615) 320-7937</div>
+</footer>
+
+<!-- BIRTHDAY MODAL -->
+<div class="modal-overlay" id="birthdayModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeBirthdayModal()">✕</button>
+    <h3>🎂 Submit a Birthday</h3>
+    <p>Share a birthday to be celebrated with our church family!</p>
+    <input type="text" id="bdayName" placeholder="Full Name" />
+    <input type="text" id="bdayDate" placeholder="Birthday (e.g. March 15)" />
+    <select id="bdayGroup">
+      <option value="" disabled selected>Select Group</option>
+      <option>General Member</option>
+      <option>Youth</option>
+      <option>Senior Ministry</option>
+      <option>Choir</option>
+      <option>Deacon / Deaconess</option>
+    </select>
+    <button class="btn-primary" style="width:100%;margin-top:4px;" onclick="addBirthday()">Add to Celebrations</button>
+  </div>
+</div>
+
+<script>
+  /* ── BIRTHDAY DATA ── */
+  const defaultBirthdays = [
+    { name: "Sis. Mary Johnson", date: "March 12", icon: "🎂" },
+    { name: "Bro. James Williams", date: "March 15", icon: "🎉" },
+    { name: "Sis. Dorothy Lee", date: "March 20", icon: "🎂" },
+    { name: "Deacon Robert Brown", date: "March 23", icon: "🎊" },
+    { name: "Sis. Angela Davis", date: "April 1", icon: "🎂" },
+    { name: "Pastor Michael Williams", date: "April 4", icon: "👑" },
+  ];
+
+  let birthdays = [...defaultBirthdays];
+
+  function renderBirthdays() {
+    const grid = document.getElementById('birthdayGrid');
+    grid.innerHTML = birthdays.map(b => `
+      <div class="birthday-card">
+        <div class="bday-icon">${b.icon}</div>
+        <div class="bday-name">${b.name}</div>
+        <div class="bday-date">${b.date}</div>
+      </div>
+    `).join('');
+  }
+
+  function openBirthdayModal()  { document.getElementById('birthdayModal').classList.add('open'); }
+  function closeBirthdayModal() { document.getElementById('birthdayModal').classList.remove('open'); }
+
+  function addBirthday() {
+    const name = document.getElementById('bdayName').value.trim();
+    const date = document.getElementById('bdayDate').value.trim();
+    if (!name || !date) { alert('Please enter a name and birthday date.'); return; }
+    birthdays.push({ name, date, icon: '🎂' });
+    renderBirthdays();
+    closeBirthdayModal();
+    document.getElementById('bdayName').value = '';
+    document.getElementById('bdayDate').value = '';
+  }
+
+  document.getElementById('birthdayModal').addEventListener('click', function(e) {
+    if (e.target === this) closeBirthdayModal();
+  });
+
+  renderBirthdays();
+
+  /* ── CALENDAR ── */
+  let calDate = new Date(2026, 2, 1); // March 2026
+  const eventDays = { '2026-2': [9,16,19,22,23,29,30], '2026-3': [5,6,12,13,19,20,26,27] };
+
+  function renderCal() {
+    const year = calDate.getFullYear(), month = calDate.getMonth();
+    const today = new Date();
+    document.getElementById('calTitle').textContent =
+      calDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+
+    const first = new Date(year, month, 1).getDay();
+    const days  = new Date(year, month + 1, 0).getDate();
+    const key   = `${year}-${month}`;
+    const evts  = eventDays[key] || [];
+
+    let html = '';
+    // Previous month padding
+    const prevDays = new Date(year, month, 0).getDate();
+    for (let i = first - 1; i >= 0; i--) {
+      html += `<div class="cal-day other-month"><div class="dn">${prevDays - i}</div></div>`;
+    }
+    for (let d = 1; d <= days; d++) {
+      const isToday = d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+      const hasEvt  = evts.includes(d);
+      html += `<div class="cal-day${isToday?' today':''}${hasEvt?' has-event':''}"><div class="dn">${d}</div></div>`;
+    }
+    // Next month padding
+    const used = first + days;
+    const cells = Math.ceil(used / 7) * 7;
+    for (let d = 1; d <= cells - used; d++) {
+      html += `<div class="cal-day other-month"><div class="dn">${d}</div></div>`;
+    }
+    document.getElementById('calDays').innerHTML = html;
+  }
+
+  document.getElementById('calPrev').onclick = () => { calDate.setMonth(calDate.getMonth()-1); renderCal(); };
+  document.getElementById('calNext').onclick = () => { calDate.setMonth(calDate.getMonth()+1); renderCal(); };
+  renderCal();
+
+  /* ── LIVE DOT (Sun 10am, Wed 7pm ET) ── */
+  function checkLive() {
+    const now  = new Date();
+    const day  = now.getDay();   // 0=Sun, 3=Wed
+    const hour = now.getHours();
+    const live = (day === 0 && hour >= 10 && hour < 12) ||
+                 (day === 3 && hour >= 19 && hour < 21);
+    const dot   = document.getElementById('liveDot');
+    const label = document.getElementById('liveLabel');
+    if (live) {
+      dot.classList.add('live');
+      label.textContent = '🔴 We are LIVE right now!';
+    } else {
+      label.textContent = 'Next live: Sunday 10:00 AM · Wednesday 7:00 PM';
+    }
+  }
+  checkLive();
+</script>
+</body>
+</html>
